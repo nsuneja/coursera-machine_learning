@@ -20,10 +20,21 @@ grad = zeros(size(theta));
 % Note: grad should have the same dimensions as theta
 %
 
+for i=1:m
+    h_i = sigmoid(theta'*X(i,:)')
+    J = J + (-y(i)*log(h_i) - (1-y(i))*(log(1-h_i)))
+end
+J = (1.0/m) * J
 
-
-
-
+n_features = size(theta)(1)
+for i=1:n_features
+    gradient = 0
+    for j=1:m
+       h_j = sigmoid(theta'*X(j,:)')
+       gradient = gradient + (h_j - y(j,1))*X(j,i)
+    end
+    grad(i,1) = (1.0/m) * gradient
+end
 
 
 
