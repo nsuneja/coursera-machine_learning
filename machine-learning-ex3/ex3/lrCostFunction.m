@@ -36,11 +36,23 @@ grad = zeros(size(theta));
 %           grad = grad + YOUR_CODE_HERE (using the temp variable)
 %
 
+z = X * theta
+h_x = sigmoid(z) % h(x) = sigmoid(theta'*x)
 
+j_1 = (1.0/m) * sum(y' * log(h_x))
+j_2 = (1.0/m) * sum((1 - y)' * log(1 - h_x))
+J = j_1 + j_2
+J = -J
+% account for regularization.
+reg_cost = (lambda/(2.0 * m)) * (sum(theta .^ 2) - (theta(1)^2))
+J = J + reg_cost
 
-
-
-
+beta = h_x - y
+grad = (1.0/m) .* (X' * beta)
+% account for regularization
+reg_factor = (lambda/(m*1.0)) .* theta
+grad = grad + reg_factor
+grad(1) = grad(1) - ((lambda/(m*1.0)) * theta(1))
 
 
 
