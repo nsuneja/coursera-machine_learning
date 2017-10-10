@@ -21,12 +21,17 @@ p = zeros(size(X, 1), 1);
 %       can use max(A, [], 2) to obtain the max for each row.
 %
 
+a_1 = [ones(m,1) X] % Add the bias unit
 
+z_2 = Theta1 * a_1'
+a_2 = sigmoid(z_2)   % Generate the intermediate activation layer.
 
+a_2 = [ones(1,m); a_2] % Add the bias unit.
 
+z_3 = Theta2 * a_2
+a_3 = sigmoid(z_3)  % Generate the output layer.
 
-
-
+[prob, p] = max(a_3', [], 2) % Make predictions.
 
 
 % =========================================================================
