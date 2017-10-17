@@ -13,7 +13,16 @@ g = zeros(size(z));
 %               each value of z (z can be a matrix, vector or scalar).
 
 
+rows = size(z,1)
+cols = size(z,2)
 
+sig_z = sigmoid(z)
+
+for i=1:rows
+   for j=1:cols
+       g(i,j) = sig_z(i,j) * (1 - sig_z(i,j))
+   end
+end
 
 
 
