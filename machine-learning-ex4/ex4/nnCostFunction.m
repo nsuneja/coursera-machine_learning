@@ -85,8 +85,8 @@ end
 J  = (1.0/m) * J
 
 
-
-
+% Adding regularization cost.
+J = J + (lambda/(2.0*m)) * (sum(Theta1(:,2:end)(:).^2) + sum(Theta2(:,2:end)(:).^2))
 
 
 
