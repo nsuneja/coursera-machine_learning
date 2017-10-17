@@ -24,7 +24,7 @@ Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):en
 
 % Setup some useful variables
 m = size(X, 1);
-         
+
 % You need to return the following variables correctly 
 J = 0;
 Theta1_grad = zeros(size(Theta1));
@@ -62,11 +62,27 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+for i=1:m
+    input = X(i,:) % 1 x 400
+    output = y(i,:) %  1 x 1, output value of the input(i)
+    output_vec = zeros(num_labels, 1) % Create an output vec based upon the number of labels, size = 10 x 1
+    output_vec(output, 1) = 1  % Set the "output" label to 1
 
+    % layer 1
+    a_1 = input'  % 400 x 1
+    a_1 = [1; a_1] % 401 x 1, Add the bias unit
+    z_2 = Theta1 * a_1   % Theta1 = 25 X 401, a_1 = 401 x 1, z2 = 25 x 1
+    a_2 = sigmoid(z_2)    % 25 x 1
 
+    % layer 2
+    a_2 = [1; a_2]  % 26 x 1
+    z_3 = Theta2 * a_2 % Theta2 = 10 x 26, a_2 = 26 x 1, z_3 = 10 x 1
+    a_3 = sigmoid(z_3)
+    h_x = a_3 % 10 x 1
 
-
-
+    J = J - (output_vec' * log(h_x) + (1-output_vec') * log(1-h_x))
+end
+J  = (1.0/m) * J
 
 
 
