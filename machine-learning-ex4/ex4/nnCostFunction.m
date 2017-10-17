@@ -67,6 +67,12 @@ DELTA_1 = 0.0
 DELTA_2 = 0.0
 DELTA_3 = 0.0
 
+% For regularized gradient calculations.
+Theta1_prime = Theta1
+Theta1_prime(:,1) = 0 % Zero-out the column corresponding to the bia unit.
+Theta2_prime = Theta2
+Theta2_prime(:,1) = 0
+
 for i=1:m
     input = X(i,:) % 1 x 400
     output = y(i,:) %  1 x 1, output value of the input(i)
@@ -94,11 +100,12 @@ for i=1:m
 
     DELTA_1 = DELTA_1 + delta_2 * a_1' % accumulated gradient for layer1, size = 25 x 401
     DELTA_2 = DELTA_2 + delta_3 * a_2' % accumulated gradient for layer2, size = 10 x 26
+
 end
 J  = (1.0/m) * J
 
-Theta1_grad = Theta1_grad .+ ((1.0/m) * DELTA_1)
-Theta2_grad = Theta2_grad .+ ((1.0/m) * DELTA_2)
+Theta1_grad = Theta1_grad .+ ((1.0/m) * DELTA_1) .+ ((lambda/(1.0*m)) * (Theta1_prime)) % account for regularization.
+Theta2_grad = Theta2_grad .+ ((1.0/m) * DELTA_2) .+ ((lambda/(1.0*m)) * (Theta2_prime)) % account for regularization.
 
 % Adding regularization cost.
 J = J + (lambda/(2.0*m)) * (sum(Theta1(:,2:end)(:).^2) + sum(Theta2(:,2:end)(:).^2))
