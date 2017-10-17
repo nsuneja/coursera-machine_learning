@@ -62,6 +62,11 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+% gradient accumulators
+DELTA_1 = 0.0
+DELTA_2 = 0.0
+DELTA_3 = 0.0
+
 for i=1:m
     input = X(i,:) % 1 x 400
     output = y(i,:) %  1 x 1, output value of the input(i)
@@ -81,14 +86,22 @@ for i=1:m
     h_x = a_3 % 10 x 1
 
     J = J - (output_vec' * log(h_x) + (1-output_vec') * log(1-h_x))
+
+    % Implementing gradient calculation via back propogation
+    delta_3 = a_3 - output_vec % error vector for output layer, size = 10 x 1
+
+    delta_2 = (Theta2' * delta_3)(2:end,:) .* sigmoidGradient(z_2) % error vector for hidden layer, 25 x 1
+
+    DELTA_1 = DELTA_1 + delta_2 * a_1' % accumulated gradient for layer1, size = 25 x 401
+    DELTA_2 = DELTA_2 + delta_3 * a_2' % accumulated gradient for layer2, size = 10 x 26
 end
 J  = (1.0/m) * J
 
+Theta1_grad = Theta1_grad .+ ((1.0/m) * DELTA_1)
+Theta2_grad = Theta2_grad .+ ((1.0/m) * DELTA_2)
 
 % Adding regularization cost.
 J = J + (lambda/(2.0*m)) * (sum(Theta1(:,2:end)(:).^2) + sum(Theta2(:,2:end)(:).^2))
-
-
 
 
 
