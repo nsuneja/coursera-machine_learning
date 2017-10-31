@@ -25,7 +25,7 @@ x = zeros(n, 1);
 %
 %               Then, the word_indices vector for this text might look 
 %               like:
-%               
+%
 %                   60  100   33   44   10     53  60  58   5
 %
 %               where, we have mapped each word onto a number, for example:
@@ -48,7 +48,9 @@ x = zeros(n, 1);
 %
 %
 
-
+for i=1:length(word_indices)
+    x(word_indices(i),1) = 1
+end
 
 
 

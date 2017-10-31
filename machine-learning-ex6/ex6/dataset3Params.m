@@ -30,11 +30,11 @@ for C_idx=1:length(test_vals)
     for sigma_idx=1:length(test_vals)
 	model = svmTrain(X, y, test_vals(C_idx), @(x1, x2) gaussianKernel(x1, x2, test_vals(sigma_idx)));
         predictions = svmPredict(model, Xval);
-	err = mean(double(predictions ~= yval))
+	err = mean(double(predictions ~= yval));
 	if err < min_err
-	    min_err = err
-	    C = test_vals(C_idx)
-	    sigma = test_vals(sigma_idx)
+	    min_err = err;
+	    C = test_vals(C_idx);
+	    sigma = test_vals(sigma_idx);
 	endif
     end
 end
