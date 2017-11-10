@@ -21,7 +21,21 @@ idx = zeros(size(X,1), 1);
 % Note: You can use a for-loop over the examples to compute this.
 %
 
+m = length(X);
 
+for i=1:m
+    minDist = flintmax;
+    minIndex = -1;
+    for j=1:K
+       dist = sum((X(i,:) - centroids(j,:)).^2);
+       if dist < minDist
+           minDist = dist;
+	   minIndex = j;
+       end
+    end
+    idx(i) = minIndex;
+end
+idx
 
 
 
