@@ -5,7 +5,7 @@ function [U, S] = pca(X)
 %
 
 % Useful values
-[m, n] = size(X);
+[m, n] = size(X)
 
 % You need to return the following variables correctly.
 U = zeros(n);
@@ -20,9 +20,7 @@ S = zeros(n);
 %       number of examples).
 %
 
-
-
-
+[U, S, V] = svd((1.0/m) .* (X'*X));
 
 
 
