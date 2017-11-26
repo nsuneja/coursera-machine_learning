@@ -49,7 +49,7 @@ Theta_grad = zeros(size(Theta));
 %end
 %J = 0.5 * J;
 
-J = 0.5 * sum(sum(R .* ((X*Theta' - Y).^2)))
+J = 0.5 * sum(sum(R .* ((X*Theta' - Y).^2))) + 0.5*lambda*sum(sum(Theta.^2)) + 0.5*lambda*sum(sum(X.^2));
 
 %for i=1:num_movies
 %    for k=1:num_features
