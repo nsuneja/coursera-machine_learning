@@ -80,14 +80,14 @@ for i=1:num_movies
     idx = find(R(i,:) == 1);
     ThetaTmp = Theta(idx,:);
     YTemp = Y(i, idx);
-    X_grad(i,:) = (X(i,:)*ThetaTmp' - YTemp)*ThetaTmp;
+    X_grad(i,:) = (X(i,:)*ThetaTmp' - YTemp)*ThetaTmp + lambda*X(i,:);
 end
 
 for i=1:num_users
     idx = find(R(:,i) == 1)';
     XTmp = X(idx,:);
     YTemp = Y(idx, i)';
-    Theta_grad(i,:) = (Theta(i,:)*XTmp' - YTemp)*XTmp;
+    Theta_grad(i,:) = (Theta(i,:)*XTmp' - YTemp)*XTmp + lambda*Theta(i,:);
 end
 
 
