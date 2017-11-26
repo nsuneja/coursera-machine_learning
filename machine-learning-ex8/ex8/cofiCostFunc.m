@@ -51,17 +51,44 @@ Theta_grad = zeros(size(Theta));
 
 J = 0.5 * sum(sum(R .* ((X*Theta' - Y).^2)))
 
+%for i=1:num_movies
+%    for k=1:num_features
+%        tmp = 0;
+%        for j=1:num_users
+%	    if R(i,j) == 1
+%    	    	tmp = tmp + (Theta(j,:)*X(i,:)' - Y(i,j))*Theta(j,k);
+%	    end
+%	end
+%	X_grad(i,k) = tmp;
+%    end
+%end
+
+%for j=1:num_users
+%    for k=1:num_features
+%        tmp = 0;
+%        for i=1:num_movies
+%	    if R(i,j) == 1
+%    	    	tmp = tmp + (Theta(j,:)*X(i,:)' - Y(i,j))*X(i,k);
+%	    end
+%	end
+%	Theta_grad(j,k) = tmp;
+%    end
+%end
 
 
+for i=1:num_movies
+    idx = find(R(i,:) == 1);
+    ThetaTmp = Theta(idx,:);
+    YTemp = Y(i, idx);
+    X_grad(i,:) = (X(i,:)*ThetaTmp' - YTemp)*ThetaTmp;
+end
 
-
-
-
-
-
-
-
-
+for i=1:num_users
+    idx = find(R(:,i) == 1)';
+    XTmp = X(idx,:);
+    YTemp = Y(idx, i)';
+    Theta_grad(i,:) = (Theta(i,:)*XTmp' - YTemp)*XTmp;
+end
 
 
 % =============================================================
